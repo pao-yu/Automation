@@ -1,4 +1,4 @@
-Sub AllClear()
+Sub AllClearForward()
 
 ' This code was created to cleanse a database of invoices, removing cleared invoices based on another sheet.
 ' For this code to work, the sheets must be named "ALL" and "CLEAR" based on their contents.
@@ -30,7 +30,6 @@ Sub AllClear()
                         
                         fullCounter = Sheets(all).Cells(Rows.Count, 13).End(xlUp).Row
                         matchList = Sheets(clear).Cells(Rows.Count, 2).End(xlUp).Row
-                        matchCounter = 0
                         
                         
                         For Each x In Sheets(clear).Range("B1:B" & Sheets(clear).Cells(Rows.Count, 2).End(xlUp).Row)
@@ -41,19 +40,14 @@ Sub AllClear()
                               End With
                                 
                            For i = fullCounter To 1 Step -1
-                           If x.Value > 0 Then
+
                               If x.Value = Sheets(all).Cells(i, 13).Value Then
                                       Sheets(all).Cells(i, 13).EntireRow.Interior.ColorIndex = 6
-                                      matchCounter = matchCounter + 1
+
                               End If
-                            End If
                            Next i
-                           
+                          
                         Next
-                        
-                    nomatchCounter = matchList - matchCounter
-                    'MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified. " & vbNewLine & nomatchCounter & " records did not have a match.)")
-                    'Worksheets(all).Activate
                     
 
 
@@ -77,25 +71,13 @@ Sub AllClearReverse()
         Dim boo As Boolean
 
         
-
-                ' ALL sheet contains the list of all values with duplicates.
-                ' CLEAR sheet contains the list of duplicates which will be deleted from the ALL sheet.
-                
                 all = "ALL"
                 clear = "CLEAR"
         
-                        ' 1st Loop - Loop through each value in the CLEAR sheet column.
-                        ' 2nd Loop - Loop through each value in the ALL sheet column.
-                        ' fullCounter is the maximum loop # which will decrease by "1" until it reaches "1".
-                        ' "1 Step -1" prevents the loop from accessing the header column.
-                        ' "i" is the interval between the loops.
-                        ' "x" is one cell for each cell in the CLEAR sheet colum.
                         
                         fullCounter = Sheets(clear).Cells(Rows.Count, 2).End(xlUp).Row
                         matchList = Sheets(all).Cells(Rows.Count, 13).End(xlUp).Row
-                        matchCounter = 0
                         
-    
                         
                         For Each x In Sheets(all).Range("M1:M" & Sheets(all).Cells(Rows.Count, 13).End(xlUp).Row)
                         
@@ -108,18 +90,12 @@ Sub AllClearReverse()
 
                               If x.Value = Sheets(clear).Cells(i, 2).Value Then
                               Sheets(clear).Cells(i, 2).EntireRow.Interior.ColorIndex = 6
-                            matchCounter = matchCounter + 1
                                 End If
                             
                            Next i
                            
                         Next
-                        
-                    nomatchCounter = matchList - matchCounter
-                    'MsgBox ("Matches identified.")
-                    'Worksheets(clear).Activate
-                    
-    
+
 
 
 End Sub
@@ -128,11 +104,11 @@ Sub AllClearMirror()
 Application.ScreenUpdating = False
 
 Dim answer As Integer
-answer = MsgBox("Highlight matching rows?", vbYesNo + vbQuestion, "Modify matching invoice IDs")
+answer = MsgBox("Highlight matching rows?", vbYesNo + vbQuestion, "All Clear Macro:")
 
 If answer = vbYes Then
         
-    Call AllClear
+    Call AllClearForward
     Call AllClearReverse
     
 Else
@@ -140,5 +116,6 @@ Else
 
 End If
 
+MsgBox "Success."
 Application.ScreenUpdating = True
 End Sub

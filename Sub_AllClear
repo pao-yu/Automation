@@ -1,7 +1,5 @@
 Sub AllClear()
-Application.ScreenUpdating = False
 
-' Deletes rows on a worksheet if a cell value on a specific column exists in another worksheet.
 ' This code was created to cleanse a database of invoices, removing cleared invoices based on another sheet.
 ' For this code to work, the sheets must be named "ALL" and "CLEAR" based on their contents.
 ' In this particular code iteration, the key columns between the sheets are:
@@ -57,18 +55,12 @@ Application.ScreenUpdating = False
                     'MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified. " & vbNewLine & nomatchCounter & " records did not have a match.)")
                     'Worksheets(all).Activate
                     
-        Else
-            ' Do nothing.
-        End If
-    
-Application.ScreenUpdating = True
+
 
 End Sub
 
 Sub AllClearReverse()
-Application.ScreenUpdating = False
 
-' Deletes rows on a worksheet if a cell value on a specific column exists in another worksheet.
 ' This code was created to cleanse a database of invoices, removing cleared invoices based on another sheet.
 ' For this code to work, the sheets must be named "ALL" and "CLEAR" based on their contents.
 ' In this particular code iteration, the key columns between the sheets are:
@@ -128,11 +120,12 @@ Application.ScreenUpdating = False
                     'Worksheets(clear).Activate
                     
     
-Application.ScreenUpdating = True
+
 
 End Sub
 
 Sub AllClearMirror()
+Application.ScreenUpdating = False
 
 Dim answer As Integer
 answer = MsgBox("Highlight matching rows?", vbYesNo + vbQuestion, "Modify matching invoice IDs")
@@ -147,4 +140,5 @@ Else
 
 End If
 
+Application.ScreenUpdating = True
 End Sub

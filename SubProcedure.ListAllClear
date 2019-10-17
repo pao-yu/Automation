@@ -100,7 +100,7 @@ Sub AllClearReverse()
 
 End Sub
 
-Sub AllClearMirror()
+Sub ListAllClear()
 Application.ScreenUpdating = False
 
 Dim answer As Integer

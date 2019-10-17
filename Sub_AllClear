@@ -15,12 +15,6 @@ Application.ScreenUpdating = False
         
         Dim all As String
         Dim clear As String
-
-        Dim answer As Integer
-        
-        answer = MsgBox("ALL: Are you sure you want to modify matching rows?", vbYesNo + vbQuestion, "Modify Cleared Reference IDs")
-
-        If answer = vbYes Then
         
 
                 ' ALL sheet contains the list of all values with duplicates.
@@ -60,8 +54,8 @@ Application.ScreenUpdating = False
                         Next
                         
                     nomatchCounter = matchList - matchCounter
-                    MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified. " & vbNewLine & nomatchCounter & " records did not have a match.)")
-                    Worksheets(all).Activate
+                    'MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified. " & vbNewLine & nomatchCounter & " records did not have a match.)")
+                    'Worksheets(all).Activate
                     
         Else
             ' Do nothing.
@@ -70,8 +64,6 @@ Application.ScreenUpdating = False
 Application.ScreenUpdating = True
 
 End Sub
-
-' ------------------------------------------------------------------------------------------------------------------------
 
 Sub AllClearReverse()
 Application.ScreenUpdating = False
@@ -91,11 +83,7 @@ Application.ScreenUpdating = False
         Dim all As String
         Dim clear As String
         Dim boo As Boolean
-        Dim answer As Integer
-        
-        answer = MsgBox("CLEAR: Are you sure you want to modify matching rows?", vbYesNo + vbQuestion, "Modify Cleared Reference IDs")
 
-        If answer = vbYes Then
         
 
                 ' ALL sheet contains the list of all values with duplicates.
@@ -128,21 +116,35 @@ Application.ScreenUpdating = False
 
                               If x.Value = Sheets(clear).Cells(i, 2).Value Then
                               Sheets(clear).Cells(i, 2).EntireRow.Interior.ColorIndex = 6
-                                      matchCounter = matchCounter + 1
-
+                            matchCounter = matchCounter + 1
+                                End If
                             
                            Next i
                            
                         Next
                         
                     nomatchCounter = matchList - matchCounter
-                    MsgBox ("Matches identified.")
-                    Worksheets(clear).Activate
+                    'MsgBox ("Matches identified.")
+                    'Worksheets(clear).Activate
                     
-        Else
-            ' Do nothing.
-        End If
     
 Application.ScreenUpdating = True
+
+End Sub
+
+Sub AllClearMirror()
+
+Dim answer As Integer
+answer = MsgBox("Highlight matching rows?", vbYesNo + vbQuestion, "Modify matching invoice IDs")
+
+If answer = vbYes Then
+        
+    Call AllClear
+    Call AllClearReverse
+    
+Else
+' Do Nothing
+
+End If
 
 End Sub

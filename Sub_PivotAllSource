@@ -1,4 +1,4 @@
-Sub PivotAllSpark()
+Sub PivotAllSource()
 
         ' For normal pivot tables only
         ' Not for OLAP-based (e.g. Data Model)

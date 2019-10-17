@@ -18,7 +18,7 @@ Application.ScreenUpdating = False
 
         Dim answer As Integer
         
-        answer = MsgBox("Are you sure you want to modify cleared invoice rows?", vbYesNo + vbQuestion, "Modify Cleared Reference IDs")
+        answer = MsgBox("ALL: Are you sure you want to modify matching rows?", vbYesNo + vbQuestion, "Modify Cleared Reference IDs")
 
         If answer = vbYes Then
         
@@ -49,12 +49,12 @@ Application.ScreenUpdating = False
                               End With
                                 
                            For i = fullCounter To 1 Step -1
-                           
+                           If x.Value > 0 Then
                               If x.Value = Sheets(all).Cells(i, 13).Value Then
                                       Sheets(all).Cells(i, 13).EntireRow.Interior.ColorIndex = 6
                                       matchCounter = matchCounter + 1
                               End If
-                              
+                            End If
                            Next i
                            
                         Next
@@ -62,6 +62,82 @@ Application.ScreenUpdating = False
                     nomatchCounter = matchList - matchCounter
                     MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified. " & vbNewLine & nomatchCounter & " records did not have a match.)")
                     Worksheets(all).Activate
+                    
+        Else
+            ' Do nothing.
+        End If
+    
+Application.ScreenUpdating = True
+
+End Sub
+
+' ------------------------------------------------------------------------------------------------------------------------
+
+Sub AllClearReverse()
+Application.ScreenUpdating = False
+
+' Deletes rows on a worksheet if a cell value on a specific column exists in another worksheet.
+' This code was created to cleanse a database of invoices, removing cleared invoices based on another sheet.
+' For this code to work, the sheets must be named "ALL" and "CLEAR" based on their contents.
+' In this particular code iteration, the key columns between the sheets are:
+' ALL   = Column #13 / "M"
+' CLEAR = Column #02 / "B"
+
+
+        Dim fullCounter As Integer
+        Dim nomatchCounter As Long
+        Dim i As Integer
+        
+        Dim all As String
+        Dim clear As String
+        Dim boo As Boolean
+        Dim answer As Integer
+        
+        answer = MsgBox("CLEAR: Are you sure you want to modify matching rows?", vbYesNo + vbQuestion, "Modify Cleared Reference IDs")
+
+        If answer = vbYes Then
+        
+
+                ' ALL sheet contains the list of all values with duplicates.
+                ' CLEAR sheet contains the list of duplicates which will be deleted from the ALL sheet.
+                
+                all = "ALL"
+                clear = "CLEAR"
+        
+                        ' 1st Loop - Loop through each value in the CLEAR sheet column.
+                        ' 2nd Loop - Loop through each value in the ALL sheet column.
+                        ' fullCounter is the maximum loop # which will decrease by "1" until it reaches "1".
+                        ' "1 Step -1" prevents the loop from accessing the header column.
+                        ' "i" is the interval between the loops.
+                        ' "x" is one cell for each cell in the CLEAR sheet colum.
+                        
+                        fullCounter = Sheets(clear).Cells(Rows.Count, 2).End(xlUp).Row
+                        matchList = Sheets(all).Cells(Rows.Count, 13).End(xlUp).Row
+                        matchCounter = 0
+                        
+    
+                        
+                        For Each x In Sheets(all).Range("M1:M" & Sheets(all).Cells(Rows.Count, 13).End(xlUp).Row)
+                        
+                              With x
+                                      .NumberFormat = "0"
+                                      .Value = .Value
+                              End With
+                                
+                           For i = fullCounter To 1 Step -1
+
+                              If x.Value = Sheets(clear).Cells(i, 2).Value Then
+                              Sheets(clear).Cells(i, 2).EntireRow.Interior.ColorIndex = 6
+                                      matchCounter = matchCounter + 1
+
+                            
+                           Next i
+                           
+                        Next
+                        
+                    nomatchCounter = matchList - matchCounter
+                    MsgBox ("Matches identified.")
+                    Worksheets(clear).Activate
                     
         Else
             ' Do nothing.

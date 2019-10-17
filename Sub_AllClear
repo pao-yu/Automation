@@ -61,7 +61,7 @@ Application.ScreenUpdating = False
                         
                     
                     MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified.)")
-        
+                    Worksheets(all).Activate
         Else
             ' Do nothing.
         End If

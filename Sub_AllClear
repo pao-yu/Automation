@@ -18,7 +18,7 @@ Application.ScreenUpdating = False
 
         Dim answer As Integer
         
-        answer = MsgBox("Are you sure you want to modify cleared invoice rows?", vbYesNo + vbQuestion, "Delete Cleared Reference IDs")
+        answer = MsgBox("Are you sure you want to modify cleared invoice rows?", vbYesNo + vbQuestion, "Modify Cleared Reference IDs")
 
         If answer = vbYes Then
         
@@ -59,13 +59,14 @@ Application.ScreenUpdating = False
                            
                         Next
                         
-                    
-                    MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified.)")
+                    nomatchCounter = matchList - matchCounter
+                    MsgBox ("All Clear. Cleared invoices modified." & vbNewLine & "(" & matchCounter & " of " & matchList & " matching records identified. " & vbNewLine & nomatchCounter & " records did not have a match.)")
                     Worksheets(all).Activate
+                    
         Else
             ' Do nothing.
         End If
-        
+    
 Application.ScreenUpdating = True
-End Sub
 
+End Sub

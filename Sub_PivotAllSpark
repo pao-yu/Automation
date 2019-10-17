@@ -1,0 +1,94 @@
+Sub PivotAllSpark()
+
+        ' For normal pivot tables only
+        ' Not for OLAP-based (e.g. Data Model)
+        ' Lists all tables
+
+        Dim wb As Workbook
+        Dim ws As Worksheet
+        Dim wsT As Worksheet
+        Dim wsList As Worksheet
+        Dim pt As PivotTable
+        Dim tbl As ListObject
+        Dim strSD As String
+        Dim strMsg As String
+        Dim nm As Name
+        Dim lRow As Long
+        Dim TableCount As Long
+        Dim StartTime As Double
+        Dim MinutesElapsed As String
+
+            On Error Resume Next
+            Application.DisplayAlerts = False
+            Application.EnableEvents = False
+
+
+        Set wb = ActiveWorkbook
+        
+            For Each wsT In wb.Sheets
+              If wsT.ListObjects.Count Then
+                TableCount = TableCount + 1
+              End If
+              If TableCount > 0 Then Exit For
+            Next wsT
+
+            If TableCount = 0 Then
+              MsgBox "No named tables in this workbook"
+              GoTo exit_Handler
+            End If
+
+
+        Set wsList = Worksheets.Add
+
+            With wsList
+                .Range("A1").Value = "Named Tables"
+                .Range("B1").Value = "Sheet"
+                .Range("C1").Value = "Address"
+                lRow = 2
+                For Each wsT In wb.Sheets
+                  For Each tbl In wsT.ListObjects
+                    .Range(.Cells(lRow, 1), .Cells(lRow, 3)).Value _
+                      = Array(tbl.Name, wsT.Name, tbl.Range.Address)
+                    lRow = lRow + 1
+                  Next tbl
+                Next wsT
+                .Columns("A:C").EntireColumn.AutoFit
+            End With
+
+
+        strMsg = "Enter one of the Table Names "
+        strMsg = strMsg & vbCrLf & "from list shown on worksheet"
+        strSD = InputBox(Prompt:=strMsg, Title:="Source Data")
+        
+            If strSD = "" Then
+              MsgBox "Cancelled"
+              Exit Sub
+              
+            Else
+              For Each ws In wb.Worksheets
+                For Each pt In ws.PivotTables
+                  If pt.PivotCache.OLAP = False Then
+                    pt.ChangePivotCache _
+                      wb.PivotCaches.Create(SourceType:=xlDatabase, _
+                            SourceData:=strSD)
+                  End If
+                Next pt
+              Next ws
+            End If
+            
+              MinutesElapsed = Format((Timer - StartTime) / 86400, "hh:mm:ss")
+              MsgBox "This code ran successfully in " & MinutesElapsed & " minutes", vbInformation
+              
+          exit_Handler:
+          
+            wsList.Delete
+            Application.EnableEvents = True
+            Application.DisplayAlerts = True
+            Exit Sub
+            
+          err_Handler:
+            MsgBox "Could not update pivot table source data"
+            Resume exit_Handler
+            
+            
+End Sub

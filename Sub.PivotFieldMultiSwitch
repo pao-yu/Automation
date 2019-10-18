@@ -1,6 +1,6 @@
 ' --------------------------------------------------------------------------------------------------------
 
-Sub switchPivotFields()
+Sub PivotFieldMultiSwitch()
 
     Call Filter_pivotX
     Call Filter_pivotY

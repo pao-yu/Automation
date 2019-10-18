@@ -1,4 +1,4 @@
-Sub Pivot_PageFilters_ChangeAll()
+Sub PivotFilterChangeAll()
 
     Dim wks As Worksheet
     Dim pvt As PivotTable

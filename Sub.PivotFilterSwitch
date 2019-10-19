@@ -1,5 +1,9 @@
 Sub PivotFilterSwitch()
 
+Application.ScreenUpdating = False
+Application.DisplayStatusBar = False
+Application.EnableEvents = False
+
     Dim allSheet As Worksheet
     Dim allPivot As PivotTable
     
@@ -15,29 +19,36 @@ Sub PivotFilterSwitch()
         itemName = InputBox(Prompt:="Input name of filter item:", Title:="ENTER FILTER")
         
         ' --- CHANGE THE PIVOTFIELD NAME HERE ---
-        filterField = "NAME OF FIELD"
+        filterField = "Nameplate"
         
-        If Not IsEmpty(itemName) Then
+            If Not IsEmpty(itemName) Then
 
-            For Each allSheet In Worksheets
-            
-                For Each allPivot In allSheet.PivotTables
-                    allPivot.PivotFields(filterField).ClearAllFilters
-                    allPivot.PivotFields(filterField).CurrentPage = plate
-                Next pvt
-                
-            Next wks
-            
-        MsgBox "Success."
+                For Each allSheet In Worksheets
+
+                    For Each allPivot In allSheet.PivotTables
+
+                        ' allPivot.PivotFields(filterField).ClearAllFilters
+                        allPivot.PivotFields(filterField).CurrentPage = itemName
+
+                    Next allPivot
+
+                Next allSheet
+
+            MsgBox "Success."
         
-        Else
-        ' Do nothing.
-        End If
+            Else
+            On Error Resume Next
+            End If
     
     Else
     ' Do nothing.
     End If
 
-    
+
+
+Application.ScreenUpdating = True
+Application.DisplayStatusBar = True
+Application.EnableEvents = True
+
 
 End Sub

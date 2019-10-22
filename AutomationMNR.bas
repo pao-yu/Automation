@@ -3,14 +3,14 @@
 ' ----------------------------------------------------------------------------------------------------------------------------------------------------------
 '
 '
-' This file is a documemntation and automation of a series of actions on a reporting data set.
-' The prerequisite actions of this automation module are:
+' This file is a documentation of the automation of a series of actions on a reporting data set.
+' The prerequisite conditions to exectute this automation module are:
 '
-'     1. The oldSheetName and newSheetName string variables must be defined by the user.
-'     2. The data in oldSheetName must be converted into an Excel Table (list object).
+'     1. The "oldSheetName" and "newSheetName" string variables must be defined by the user.
+'     2. The data in oldSheetName must be converted into an Excel Table (VBA list object).
 '
 ' From these inputs, the automation module then proceeds with the individual process steps,
-' called through the master subroutine.calling procedure, "AutomationMNR_Cluster()".
+' called through the master subroutine calling procedure, "AutomationMNR_Cluster()".
 '
 '
 ' ----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ End Sub
 
 
 
-Sub AutomationMNR_C0001_CloneClearIf()                                          ' Delete clone rows based on set criteria
+Sub AutomationMNR_C0001_CloneClearIf()                                          ' Delete cloned rows based on set criteria
   
     Dim fullCounter As Long
 

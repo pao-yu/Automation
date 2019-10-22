@@ -50,7 +50,7 @@ Sub AutomationMNR_C0001_CloneClearIf()                                          
 
       ' Set fullCounter for 1st Criteria
       fullCounter = ActiveWorkbook.Worksheets("Tier 2").ListObjects.Item(1).DataBodyRange.Rows.Count
-      For i = 2 To fullCounter + 1
+      For i = fullCounter To 1 Step - 1
         If Not Worksheets("Tier 2").Cells(i, 2).Value = "Tier 2" Then
           Sheets("Tier 2").Cells(i, 2).EntireRow.Delete
         End If
@@ -58,7 +58,7 @@ Sub AutomationMNR_C0001_CloneClearIf()                                          
 
       ' Reset fullCounter for 2nd Criteria
       fullCounter = ActiveWorkbook.Worksheets("Tier 2").ListObjects.Item(1).DataBodyRange.Rows.Count
-      For i = 2 To fullCounter + 1
+      For i = fullCounter To 1 Step - 1
         If Worksheets("Tier 2").Cells(i, 2).Value = "Tier 2" And _
         Worksheets("Tier 2").Cells(i, 3).Value = "OOH" Then
           Sheets("Tier 2").Cells(i, 2).EntireRow.Delete
@@ -67,7 +67,7 @@ Sub AutomationMNR_C0001_CloneClearIf()                                          
 
       ' Reset fullCounter for 3rd Criteria
       fullCounter = ActiveWorkbook.Worksheets("Tier 2").ListObjects.Item(1).DataBodyRange.Rows.Count
-      For i = 2 To fullCounter + 1
+      For i = fullCounter To 1 Step - 1
         If Worksheets("Tier 2").Cells(i, 2).Value = "Tier 2" And _
         Worksheets("Tier 2").Cells(i, 3).Value = "Local Newspapers" Then
           Sheets("Tier 2").Cells(i, 2).EntireRow.Delete
@@ -76,7 +76,7 @@ Sub AutomationMNR_C0001_CloneClearIf()                                          
 
       ' Reset fullCounter for 4th Criteria
       fullCounter = ActiveWorkbook.Worksheets("Tier 2").ListObjects.Item(1).DataBodyRange.Rows.Count
-      For i = 2 To fullCounter + 1
+      For i = fullCounter To 1 Step - 1
         If Worksheets("Tier 2").Cells(i, 2).Value = "Tier 2" And _
         Worksheets("Tier 2").Cells(i, 3).Value = "Magazines" Then
           Sheets("Tier 2").Cells(i, 2).EntireRow.Delete

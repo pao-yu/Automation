@@ -4,6 +4,15 @@
 
 ' --------------------------------------------------------------------------------------------------------
 
+  Sub UnifyPivotData()
+  
+    Call UnifyAllPivotSources
+    Call UnifyAllPivotCaches
+  
+  End Sub
+
+' --------------------------------------------------------------------------------------------------------
+
   Sub UnifyAllPivotSources()
 
     Dim wb As Workbook
@@ -32,7 +41,10 @@
 
           End If
 
-    MsgBox "Pivot datasource unification success."
+    MsgBox "Pivot datasource unification success."& _
+                  "There are " _
+                  & ActiveWorkbook.PivotCaches.Count _
+                  & " pivot caches in the active workook."
 
   End Sub
 

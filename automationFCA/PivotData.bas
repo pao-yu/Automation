@@ -1,67 +1,68 @@
-Option Explicit
+' --------------------------------------------------------------------------------------------------------
+
+  Option Explicit
 
 ' --------------------------------------------------------------------------------------------------------
 
-Sub UnifyAllPivotSources()
+  Sub UnifyAllPivotSources()
 
-  Dim wb As Workbook
-  Dim ws As Worksheet
-  Dim pt As PivotTable
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim pt As PivotTable
 
-  Dim sourceTableName As String
+    Dim sourceTableName As String
 
-  sourceTableName = InputBox(Prompt:="Enter Table Name", Title:="Source Data")
+    sourceTableName = InputBox(Prompt:="Enter Table Name", Title:="Source Data")
 
-        If sourceTableName = "" Then
-          MsgBox "Cancelled."
-          Exit Sub
+          If sourceTableName = "" Then
+            MsgBox "Cancelled."
+            Exit Sub
 
-        Else
-          For Each ws In wb.Worksheets
+          Else
+            For Each ws In wb.Worksheets
+              For Each pt In ws.PivotTables
+
+                If pt.PivotCache.OLAP = False Then
+                  pt.ChangePivotCache _
+                    wb.PivotCaches.Create(SourceType:=xlDatabase, _
+                                          SourceData:=sourceTableName)
+                End If
+              Next pt
+            Next ws
+
+          End If
+
+    MsgBox "Pivot datasource unification success."
+
+  End Sub
+
+' --------------------------------------------------------------------------------------------------------
+
+  Sub UnifyAllPivotCaches()
+
+    Dim pt As PivotTable
+    Dim ws As Worksheet
+    Dim answer As Integer
+
+    answer = MsgBox("Unify all Pivot Caches?", vbYesNo + vbQuestion)
+
+        If answer = vbYes Then
+
+          For Each ws In ActiveWorkbook.Worksheets
             For Each pt In ws.PivotTables
-
-              If pt.PivotCache.OLAP = False Then
-                pt.ChangePivotCache _
-                  wb.PivotCaches.Create(SourceType:=xlDatabase, _
-                                        SourceData:=sourceTableName)
-              End If
+              pt.CacheIndex = Sheets("DEVELOPMENT").PivotTables("MasterTable").CacheIndex
             Next pt
           Next ws
 
+          MsgBox "Pivot cache unification success. "& _
+                  "There are " _
+                  & ActiveWorkbook.PivotCaches.Count _
+                  & " pivot caches in the active workook."
+        Else
+        ' Do nothing.
+
         End If
 
-  MsgBox "Pivot datasource unification success."
-
-End Sub
-
-' --------------------------------------------------------------------------------------------------------
-
-Sub UnifyAllPivotCaches()
-
-  Dim pt As PivotTable
-  Dim wks As Worksheet
-  Dim answer As Integer
-
-  answer = MsgBox("Unify all Pivot Caches?", vbYesNo + vbQuestion)
-
-      If answer = vbYes Then
-
-        For Each wks In ActiveWorkbook.Worksheets
-          For Each pt In wks.PivotTables
-            pt.CacheIndex = Sheets("DEVELOPMENT").PivotTables("MasterTable").CacheIndex
-          Next pt
-        Next wks
-
-        MsgBox "Pivot cache unification success. "& _
-                "There are " _
-                & ActiveWorkbook.PivotCaches.Count _
-                & " pivot caches in the active workook."
-
-      Else
-      ' Do nothing.
-
-      End If
-
-End Sub
+  End Sub
 
 ' --------------------------------------------------------------------------------------------------------

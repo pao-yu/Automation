@@ -30,7 +30,7 @@ Sub UnifyAllPivotSources()
 
         End If
 
-        MsgBox "Pivot datasource switch success."
+  MsgBox "Pivot datasource unification success."
 
 End Sub
 

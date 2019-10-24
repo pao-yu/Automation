@@ -1,5 +1,7 @@
 Option Explicit
 
+' --------------------------------------------------------------------------------------------------------
+
 Sub UnifyAllPivotSources()
 
   Dim wb As Workbook
@@ -7,7 +9,6 @@ Sub UnifyAllPivotSources()
   Dim pt As PivotTable
 
   Dim sourceTableName As String
-
 
   sourceTableName = InputBox(Prompt:="Enter Table Name", Title:="Source Data")
 
@@ -33,6 +34,7 @@ Sub UnifyAllPivotSources()
 
 End Sub
 
+' --------------------------------------------------------------------------------------------------------
 
 Sub UnifyAllPivotCaches()
 
@@ -61,3 +63,5 @@ Sub UnifyAllPivotCaches()
       End If
 
 End Sub
+
+' --------------------------------------------------------------------------------------------------------

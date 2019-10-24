@@ -1,6 +1,6 @@
 Option Explicit
 
-Sub ChangeAllPivotSources()
+Sub UnifyAllPivotSources()
 
   Dim wb As Workbook
   Dim ws As Worksheet

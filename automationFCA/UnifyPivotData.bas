@@ -1,8 +1,5 @@
-' --------------------------------------------------------------------------------------------------------
+Option Explicit
 
-  Option Explicit
-
-' --------------------------------------------------------------------------------------------------------
 
   Sub UnifyPivotData()
   
@@ -11,72 +8,68 @@
   
   End Sub
 
-' --------------------------------------------------------------------------------------------------------
 
-  Sub UnifyAllPivotSources()
+      Sub UnifyAllPivotSources()
 
-    Dim wb As Workbook
-    Dim ws As Worksheet
-    Dim pt As PivotTable
-    Set wb = ActiveWorkbook
+        Dim wb As Workbook
+        Dim ws As Worksheet
+        Dim pt As PivotTable
+        Set wb = ActiveWorkbook
 
-    Dim sourceTableName As String
-    sourceTableName = InputBox(Prompt:="Enter Table Name", Title:="Source Data")
+        Dim sourceTableName As String
+        sourceTableName = InputBox(Prompt:="Enter Table Name", Title:="Source Data")
 
-          If sourceTableName = "" Then
-            MsgBox "Cancelled."
-            Exit Sub
+              If sourceTableName = "" Then
+                MsgBox "Cancelled."
+                Exit Sub
 
-          Else
-            For Each ws In wb.Worksheets
-              For Each pt In ws.PivotTables
+              Else
+                For Each ws In wb.Worksheets
+                  For Each pt In ws.PivotTables
 
-                If pt.PivotCache.OLAP = False Then
-                  pt.ChangePivotCache _
-                    wb.PivotCaches.Create(SourceType:=xlDatabase, _
-                                          SourceData:=sourceTableName)
-                End If
-              Next pt
-            Next ws
+                    If pt.PivotCache.OLAP = False Then
+                      pt.ChangePivotCache _
+                        wb.PivotCaches.Create(SourceType:=xlDatabase, _
+                                              SourceData:=sourceTableName)
+                    End If
+                  Next pt
+                Next ws
 
-          End If
+              End If
 
-    MsgBox "Pivot datasource unification success."& _
-                  "There are " _
-                  & ActiveWorkbook.PivotCaches.Count _
-                  & " pivot caches in the active workook."
+        MsgBox "Pivot datasource unification success."& _
+                      "There are " _
+                      & ActiveWorkbook.PivotCaches.Count _
+                      & " pivot caches in the active workook."
 
-  End Sub
+      End Sub
 
-' --------------------------------------------------------------------------------------------------------
 
-  Sub UnifyAllPivotCaches()
-  
-    Dim wb As Workbook
-    Dim ws As Worksheet
-    Dim pt As PivotTable
-    Set wb = ActiveWorkbook
+      Sub UnifyAllPivotCaches()
 
-    Dim answer As Integer
-    answer = MsgBox("Unify all Pivot Caches?", vbYesNo + vbQuestion)
+        Dim wb As Workbook
+        Dim ws As Worksheet
+        Dim pt As PivotTable
+        Set wb = ActiveWorkbook
 
-        If answer = vbYes Then
+        Dim answer As Integer
+        answer = MsgBox("Unify all Pivot Caches?", vbYesNo + vbQuestion)
 
-          For Each ws In ActiveWorkbook.Worksheets
-            For Each pt In ws.PivotTables
-              pt.CacheIndex = wb.PivotTables(1).CacheIndex
-            Next pt
-          Next ws
+            If answer = vbYes Then
 
-          MsgBox "Pivot cache unification success. "& _
-                  "There are " _
-                  & ActiveWorkbook.PivotCaches.Count _
-                  & " pivot caches in the active workook."
-        Else
-        ' Do nothing.
+              For Each ws In ActiveWorkbook.Worksheets
+                For Each pt In ws.PivotTables
+                  pt.CacheIndex = wb.PivotTables(1).CacheIndex
+                Next pt
+              Next ws
 
-        End If
+              MsgBox "Pivot cache unification success. "& _
+                      "There are " _
+                      & ActiveWorkbook.PivotCaches.Count _
+                      & " pivot caches in the active workook."
+            Else
+            ' Do nothing.
 
-  End Sub
+            End If
 
-' --------------------------------------------------------------------------------------------------------
+      End Sub

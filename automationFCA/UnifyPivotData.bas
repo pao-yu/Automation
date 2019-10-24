@@ -18,9 +18,9 @@
     Dim wb As Workbook
     Dim ws As Worksheet
     Dim pt As PivotTable
+    Set wb = ActiveWorkbook
 
     Dim sourceTableName As String
-
     sourceTableName = InputBox(Prompt:="Enter Table Name", Title:="Source Data")
 
           If sourceTableName = "" Then
@@ -51,18 +51,20 @@
 ' --------------------------------------------------------------------------------------------------------
 
   Sub UnifyAllPivotCaches()
-
-    Dim pt As PivotTable
+  
+    Dim wb As Workbook
     Dim ws As Worksheet
-    Dim answer As Integer
+    Dim pt As PivotTable
+    Set wb = ActiveWorkbook
 
+    Dim answer As Integer
     answer = MsgBox("Unify all Pivot Caches?", vbYesNo + vbQuestion)
 
         If answer = vbYes Then
 
           For Each ws In ActiveWorkbook.Worksheets
             For Each pt In ws.PivotTables
-              pt.CacheIndex = Sheets("DEVELOPMENT").PivotTables("MasterTable").CacheIndex
+              pt.CacheIndex = wb.PivotTables(1).CacheIndex
             Next pt
           Next ws
 

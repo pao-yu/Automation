@@ -1,12 +1,14 @@
 Option Explicit
 
 ' --------------------------------------------------------------------------------------------------------
-' "UnifyPivotData"    Changes and unifies all pivot data sources (and caches) into one. 
 '
-' Average run-time:   15:00 mins (45 Pivot Tables / 500K data rows)
-' Requirements:       Excel Named Table as Data Source
-' Effect Hierarchy:   Active Workbook Only
-' Created by:         Pao Yu
+'   "UnifyPivotData"    Changes and unifies all pivot data sources (and caches) into one. 
+'
+'   Average run-time:   15:00 mins (45 Pivot Tables / 500K data rows)
+'   Requirements:       Excel Named Table as Data Source
+'   Effect Hierarchy:   Active Workbook Only
+'   Created by:         Pao Yu
+'
 ' --------------------------------------------------------------------------------------------------------
 
 

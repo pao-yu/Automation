@@ -47,7 +47,7 @@ Sub UnifyPivotData()
           Next pt
         Next ws
 
-  MsgBox MsgBox "Success. Pivot data unified."
+  MsgBox "Success. Pivot data unified."
 
   Else
   ' Do nothing.

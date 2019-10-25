@@ -1,13 +1,4 @@
-Sub PPivotFieldSwitch_Multi()
-
-    Call PivotFieldSwitch
-    MsgBox "Success."
-
-End Sub
-
-' --------------------------------------------------------------------------------------------------------
-
-Sub PivotFieldSwitch()
+Sub PivotSwitchFieldFilter()
 
     Dim list As Range
     Dim listItem As Range
@@ -23,18 +14,16 @@ Sub PivotFieldSwitch()
 
             For Each filterItem In .PivotItems
                 filterItem.Visible = False
-
                     For Each listItem In list
-
                         If filterItem.Caption = listItem.Text Then
                         filterItem.Visible = True
                         Exit For
-                        End If
-                        
+                        End If         
                     Next listItem
-                    
             Next filterItem
-            
+
         End With
+
+    ' MsgBox "Success. Pivot field "& filterField & "filters switched."
 
 End Sub

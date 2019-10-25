@@ -8,10 +8,11 @@ Sub UnifyPivotPageFilters()
     Dim answer As Integer
     
     filterField = "Nameplate"
+    
     answer = MsgBox("Change filters for " & filterField & "?", vbYesNo + vbQuestion)
 
         If answer = vbYes Then
-            itemName = InputBox(Prompt:="Input "& filterField & ":", Title:="Page Filter Name")
+        itemName = InputBox(Prompt:="Enter "& filterField & ":", Title:="Filter Select")
             For Each allSheet In Worksheets
                 For Each allPivot In allSheet.PivotTables
                     allPivot.PivotFields(filterField).ClearAllFilters
@@ -20,7 +21,7 @@ Sub UnifyPivotPageFilters()
                 Next allPivot
             Next allSheet
             
-            MsgBox "Success. All " & filterField & " page filters set to " & itemName & "."
+            MsgBox "Success. " & filterField & " filters set to " & itemName & "."
         
         Else
             ' Do nothing.

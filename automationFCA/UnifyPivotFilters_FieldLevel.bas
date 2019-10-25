@@ -1,4 +1,4 @@
-Sub PivotSwitchFieldFilter()
+Sub UnifyPivotFilters_FieldLevel()
 
     Dim list As Range
     Dim listItem As Range
@@ -24,6 +24,6 @@ Sub PivotSwitchFieldFilter()
 
         End With
 
-    ' MsgBox "Success. Pivot field "& filterField & "filters switched."
+        MsgBox "Success. "& filterField & "filters applied."
 
 End Sub

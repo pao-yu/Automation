@@ -31,20 +31,22 @@ Sub UnifyPivotData()
         If sourceTableName = "" Then
           MsgBox "Name not detected."
           Exit Sub
+          
         Else                                                              ' Loop through and change data source for all Pivot Tables in the Active Workbook.
           For Each ws In wb.Worksheets                                    ' The data source is set from the user's input. Name must be from an Excel Named Table.
             For Each pt In ws.PivotTables
               If pt.PivotCache.OLAP = False Then
-                pt.ChangePivotCache _
-                  wb.PivotCaches.Create(SourceType:=xlDatabase, _
-                                        SourceData:=sourceTableName)
+                 pt.ChangePivotCache _
+                 wb.PivotCaches.Create(SourceType:=xlDatabase, _
+                                       SourceData:=sourceTableName)
               End If
             Next pt
           Next ws
+      
         End If
   
-    For Each ws In ActiveWorkbook.Worksheets                              ' Loop through and unify pivot caches for all Pivot Tables in the Active Workbook.
-          For Each pt In ws.PivotTables                                   ' The cache is set from the first pivot table that appears in the first worksheet.
+        For Each ws In ActiveWorkbook.Worksheets                            ' Loop through and unify pivot caches for all Pivot Tables in the Active Workbook.
+          For Each pt In ws.PivotTables                                     ' The cache is set from the first pivot table that appears in the first worksheet.
             pt.CacheIndex = wb.Worksheets(1).PivotTables(1).CacheIndex
           Next pt
         Next ws

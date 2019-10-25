@@ -15,9 +15,9 @@ Sub UnifyPivotData()
   If answer = vbYes Then
       
       sourceTableName = InputBox(Prompt:="Enter table name of new source data (case-sensitive).", Title:="Unify Source Data")
-      
+        
         If sourceTableName = "" Then
-          MsgBox "Table name not detected."
+          MsgBox "Name not detected."
           Exit Sub
 
         Else
@@ -46,9 +46,6 @@ Sub UnifyPivotData()
                           & " pivot cache."
   Else
   ' Do nothing.
-
   End If
 
-
 End Sub
-

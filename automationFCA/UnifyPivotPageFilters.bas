@@ -1,4 +1,4 @@
-Sub UnifyPivotPageFilters()
+Sub UnifyPivotFilters_PageLevel()
 
     Dim allSheet As Worksheet
     Dim allPivot As PivotTable

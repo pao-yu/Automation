@@ -30,9 +30,9 @@ Sub UnifyPivotFilters_FieldLevel()
     pivotTableName      = ""
     pivotFieldLabel     = ""
     
-    Set list = Range(listName)                                                               
-        Set filterTable = Sheets(pivotTableSheet).PivotTables(pivotTableName)                
-            Set filterLabel = filterTable.PivotFields(pivotFieldLabel)
+    Set list            = Range(listName)                                                               
+    Set filterTable     = Sheets(pivotTableSheet).PivotTables(pivotTableName)                
+    Set filterLabel     = filterTable.PivotFields(pivotFieldLabel)
     
         With filterLabel                                                                     ' Indicate specific object to be manipulated.
 

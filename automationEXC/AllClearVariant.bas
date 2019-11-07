@@ -136,17 +136,42 @@ End Sub
 
 Sub CheckLookUp()
 
-Dim rLastCell As Range
+        Dim all As String
+        Dim clear As String
+        Dim rLastCell As Range
+        Dim vLookupCell As Range
+        Dim LookupRange As Range
+        
+        clear = "CLEAR"
+        all = "ALL"
+        
+        Set LookupRange = Sheets(clear).Range("A1:P80")
 
-Set rLastCell = Sheets("ALL").Cells.Find(What:="*", _
-                                                    After:=Sheets("ALL").Cells(1, 1), _
-                                                    LookIn:=xlFormulas, _
-                                                    LookAt:=xlPart, _
-                                                    SearchOrder:=xlByColumns, _
-                                                    SearchDirection:=xlPrevious, _
-                                                    MatchCase:=False)
+        Set rLastCell = Sheets("ALL").Cells.Find(What:="*", _
+                                                            After:=Sheets("ALL").Cells(1, 1), _
+                                                            LookIn:=xlFormulas, _
+                                                            LookAt:=xlPart, _
+                                                            SearchOrder:=xlByColumns, _
+                                                            SearchDirection:=xlPrevious, _
+                                                            MatchCase:=False)
 
-Sheets("ALL").Cells(1, rLastCell.Column + 1).Interior.ColorIndex = 6
-Sheets("ALL").Cells(1, rLastCell.Column + 1).Value = "Check Lookup"
+        fullCounter = Sheets(all).Cells(Rows.Count, 1).End(xlUp).Row
+
+        Sheets(all).Cells(1, rLastCell.Column + 1).Interior.ColorIndex = 6
+        Sheets(all).Cells(1, rLastCell.Column + 1).Value = "Check Lookup"
+
+        Set vLookupCell = Sheets("ALL").Cells.Find(What:="Check Lookup", _
+                                                            After:=Sheets("ALL").Cells(1, 1), _
+                                                            LookIn:=xlFormulas, _
+                                                            LookAt:=xlPart, _
+                                                            SearchOrder:=xlByColumns, _
+                                                            SearchDirection:=xlPrevious, _
+                                                            MatchCase:=False)
+
+        ' Sheets(all).Cells(2, vLookupCell.Column).Formula = "=INDEX(CLEAR!$A$1:$P$81,MATCH(M2,CLEAR!$B$2:$B$80,0),4)"
+        
+        For i = 2 To fullCounter
+            Sheets(all).Cells(i, vLookupCell.Column).Value = "=INDEX(CLEAR!$A$1:$P$81,MATCH(M" & i & ",CLEAR!$B$2:$B$80,0),4)"
+        Next i
 
 End Sub

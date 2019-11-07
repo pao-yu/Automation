@@ -148,9 +148,10 @@ Sub CheckLookUp()
         all = "ALL"
         varAll = Sheets("home").Range("G22").Value
         varClear = Sheets("home").Range("H22").Value
+        varClearReturn = Sheets("home").Range("I22").Value
 
         Set rLastCell = Sheets(all).Cells.Find(What:="*", _
-                                                            After:=Sheets("ALL").Cells(1, 1), _
+                                                            After:=Sheets(all).Cells(1, 1), _
                                                             LookIn:=xlFormulas, _
                                                             LookAt:=xlPart, _
                                                             SearchOrder:=xlByColumns, _
@@ -158,7 +159,8 @@ Sub CheckLookUp()
                                                             MatchCase:=False)
 
         fullCounter = Sheets(all).Cells(Rows.Count, 1).End(xlUp).Row
-
+        fullCounterClear = Sheets(clear).Cells(Rows.Count, 1).End(xlUp).Row
+        
         Sheets(all).Cells(1, rLastCell.Column + 1).Interior.ColorIndex = 6
         Sheets(all).Cells(1, rLastCell.Column + 1).Value = "Check Lookup"
 
@@ -171,8 +173,8 @@ Sub CheckLookUp()
                                                             MatchCase:=False)
 
         For i = 2 To fullCounter
-            Sheets(all).Cells(i, vLookupCell.Column).Formula = "=INDEX(CLEAR!$A$1:$P$81,MATCH(" & varAll & i & ",CLEAR!$B$2:$B$80,0),4)"
-                                                              ' Last Work : You were trying to make variables for the formula above ^ "varAll" was the last attempt.
+            Sheets(all).Cells(i, vLookupCell.Column).Formula = "=INDEX(CLEAR!$A$1:$P$81,MATCH(" & varAll & i & ",CLEAR!$" & varClear & "$2:$" & varClear & "$" & fullCounterClear & ",0),4)"
+                                                                                                            ' Last Work : You were trying to figure out how to convert the #4 to "E"
             If Not IsError(Sheets(all).Cells(i, vLookupCell.Column).Value) Then
                               Sheets(all).Cells(i, vLookupCell.Column).Interior.ColorIndex = 6
                                 End If

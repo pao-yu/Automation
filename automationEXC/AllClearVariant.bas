@@ -141,13 +141,15 @@ Sub CheckLookUp()
         Dim rLastCell As Range
         Dim vLookupCell As Range
         Dim LookupRange As Range
+        Dim fullRangeAll As Range
+        Dim fullRangeClear As Range
         
         clear = "CLEAR"
         all = "ALL"
-        
-        Set LookupRange = Sheets(clear).Range("A1:P80")
+        varAll = Sheets("home").Range("G22").Value
+        varClear = Sheets("home").Range("H22").Value
 
-        Set rLastCell = Sheets("ALL").Cells.Find(What:="*", _
+        Set rLastCell = Sheets(all).Cells.Find(What:="*", _
                                                             After:=Sheets("ALL").Cells(1, 1), _
                                                             LookIn:=xlFormulas, _
                                                             LookAt:=xlPart, _
@@ -160,7 +162,7 @@ Sub CheckLookUp()
         Sheets(all).Cells(1, rLastCell.Column + 1).Interior.ColorIndex = 6
         Sheets(all).Cells(1, rLastCell.Column + 1).Value = "Check Lookup"
 
-        Set vLookupCell = Sheets("ALL").Cells.Find(What:="Check Lookup", _
+        Set vLookupCell = Sheets(all).Cells.Find(What:="Check Lookup", _
                                                             After:=Sheets("ALL").Cells(1, 1), _
                                                             LookIn:=xlFormulas, _
                                                             LookAt:=xlPart, _
@@ -168,10 +170,12 @@ Sub CheckLookUp()
                                                             SearchDirection:=xlPrevious, _
                                                             MatchCase:=False)
 
-        ' Sheets(all).Cells(2, vLookupCell.Column).Formula = "=INDEX(CLEAR!$A$1:$P$81,MATCH(M2,CLEAR!$B$2:$B$80,0),4)"
-        
         For i = 2 To fullCounter
-            Sheets(all).Cells(i, vLookupCell.Column).Value = "=INDEX(CLEAR!$A$1:$P$81,MATCH(M" & i & ",CLEAR!$B$2:$B$80,0),4)"
+            Sheets(all).Cells(i, vLookupCell.Column).Formula = "=INDEX(CLEAR!$A$1:$P$81,MATCH(" & varAll & i & ",CLEAR!$B$2:$B$80,0),4)"
+                                                              ' Last Work : You were trying to make variables for the formula above ^ "varAll" was the last attempt.
+            If Not IsError(Sheets(all).Cells(i, vLookupCell.Column).Value) Then
+                              Sheets(all).Cells(i, vLookupCell.Column).Interior.ColorIndex = 6
+                                End If
         Next i
 
 End Sub

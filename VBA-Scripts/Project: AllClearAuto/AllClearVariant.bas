@@ -146,48 +146,70 @@ Sub CheckLookUp()
 
         Dim all As String
         Dim clear As String
+        Dim varClearReturnColumnNum As String
         Dim rLastCell As Range
+        Dim cLastCell As Range
         Dim vLookupCell As Range
         Dim LookupRange As Range
         Dim fullRangeAll As Range
         Dim fullRangeClear As Range
         
+        ' Define variables and location on variable cell inputs on the main macro UI worksheet.
         clear = "CLEAR"
         all = "ALL"
+        
+        ' Variable value assignment from home page
         varAll = Sheets("home").Range("G22").Value
         varClear = Sheets("home").Range("H22").Value
         varClearReturn = Sheets("home").Range("I22").Value
-
-        Set rLastCell = Sheets(all).Cells.Find(What:="*", _
-                                                            After:=Sheets("ALL").Cells(1, 1), _
-                                                            LookIn:=xlFormulas, _
-                                                            LookAt:=xlPart, _
-                                                            SearchOrder:=xlByColumns, _
-                                                            SearchDirection:=xlPrevious, _
-                                                            MatchCase:=False)
-
+        
+        ' Convert the third variable, "Return Key" from a letter to a number
+        wColNum = Range(varClearReturn & 1).Column
+        columnLetterConverted = wColNum - 1
+        varClearReturnColumnNum = columnLetterConverted
+        
+        'Count max rows for all sheet and clear sheet
         fullCounter = Sheets(all).Cells(Rows.Count, 1).End(xlUp).Row
         fullCounterClear = Sheets(clear).Cells(Rows.Count, 1).End(xlUp).Row
         
-        Sheets(all).Cells(1, rLastCell.Column + 1).Interior.ColorIndex = 6
-        Sheets(all).Cells(1, rLastCell.Column + 1).Value = "Check Lookup"
-
-        Set vLookupCell = Sheets(all).Cells.Find(What:="Check Lookup", _
-                                                            After:=Sheets("ALL").Cells(1, 1), _
+        ' Finds the last cell on the ALL sheet
+        Set rLastCell = Sheets(all).Cells.Find(What:="*", _
+                                                            After:=Sheets(all).Cells(1, 1), _
                                                             LookIn:=xlFormulas, _
                                                             LookAt:=xlPart, _
                                                             SearchOrder:=xlByColumns, _
                                                             SearchDirection:=xlPrevious, _
                                                             MatchCase:=False)
-
+                                                            
+         ' Finds the last cell on the CLEAR sheet
+        Set cLastCell = Sheets(clear).Cells.Find(What:="*", _
+                                                            After:=Sheets(clear).Cells(1, 1), _
+                                                            LookIn:=xlFormulas, _
+                                                            LookAt:=xlPart, _
+                                                            SearchOrder:=xlByColumns, _
+                                                            SearchDirection:=xlPrevious, _
+                                                            MatchCase:=False)
+        
+        ' Creates a new header cell at the end of the ALL sheet data, highlighting it yellow and labelling it "Check Lookup"
+        Sheets(all).Cells(1, rLastCell.Column + 1).Interior.ColorIndex = 6
+        Sheets(all).Cells(1, rLastCell.Column + 1).Value = "Check Lookup"
+        Set vLookupCell = Sheets(all).Cells.Find(What:="Check Lookup", _
+                                                            After:=Sheets(all).Cells(1, 1), _
+                                                            LookIn:=xlFormulas, _
+                                                            LookAt:=xlPart, _
+                                                            SearchOrder:=xlByColumns, _
+                                                            SearchDirection:=xlPrevious, _
+                                                            MatchCase:=False)
+                                                            
+        ' Input a VLOOKUP (Index/Match) formula on all cells of the new "Check Lookup" Column on the ALL Sheet
         For i = 2 To fullCounter
-            Sheets(all).Cells(i, vLookupCell.Column).Formula = "=INDEX(CLEAR!$A$1:$P$81,MATCH(" & varAll & i & ",CLEAR!$" & varClear & "$2:$" & varClear & "$" & fullCounterClear & ",0),4)"
-                                                                                                            ' Last Work : You were trying to figure out how to convert the #4 to "E"
+            Sheets(all).Cells(i, vLookupCell.Column).Formula = "=INDEX(" & "CLEAR!$A$1:" & cLastCell.Address & ",MATCH(" & varAll & i & ",CLEAR!$" & varClear & "$2:$" & varClear & "$" & fullCounterClear & ",0)," & varClearReturnColumnNum & ")"
             If Not IsError(Sheets(all).Cells(i, vLookupCell.Column).Value) Then
-                              Sheets(all).Cells(i, vLookupCell.Column).Interior.ColorIndex = 6
-                                End If
+                Sheets(all).Cells(i, vLookupCell.Column).Interior.ColorIndex = 8
+            End If
         Next i
 
 End Sub
+
 
 ' -----------------------------------------------------------------------------------------------------------------------

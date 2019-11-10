@@ -1,4 +1,4 @@
-step.jpg
+![](step.png)
 
 # Automation 一日一歩
 ### "One Day, One Step."

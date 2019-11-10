@@ -1,3 +1,5 @@
+' -----------------------------------------------------------------------------------------------------------------------
+
 Sub VariantAllClearMirror()
 Application.ScreenUpdating = False
 
@@ -16,6 +18,8 @@ End If
 
 Application.ScreenUpdating = True
 End Sub
+
+' -----------------------------------------------------------------------------------------------------------------------
 
 Sub VariantAllClearForward()
 
@@ -77,6 +81,8 @@ Sub VariantAllClearForward()
 
 End Sub
 
+' -----------------------------------------------------------------------------------------------------------------------
+
 Sub VariantAllClearReverse()
 
 ' This code was created to cleanse a database of invoices, removing cleared invoices based on another sheet.
@@ -134,6 +140,8 @@ Sub VariantAllClearReverse()
     
 End Sub
 
+' -----------------------------------------------------------------------------------------------------------------------
+
 Sub CheckLookUp()
 
         Dim all As String
@@ -151,7 +159,7 @@ Sub CheckLookUp()
         varClearReturn = Sheets("home").Range("I22").Value
 
         Set rLastCell = Sheets(all).Cells.Find(What:="*", _
-                                                            After:=Sheets(all).Cells(1, 1), _
+                                                            After:=Sheets("ALL").Cells(1, 1), _
                                                             LookIn:=xlFormulas, _
                                                             LookAt:=xlPart, _
                                                             SearchOrder:=xlByColumns, _
@@ -181,3 +189,5 @@ Sub CheckLookUp()
         Next i
 
 End Sub
+
+' -----------------------------------------------------------------------------------------------------------------------

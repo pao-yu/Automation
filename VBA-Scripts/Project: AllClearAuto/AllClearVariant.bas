@@ -21,6 +21,26 @@ End Sub
 
 ' -----------------------------------------------------------------------------------------------------------------------
 
+Sub VariantCheckLookupMirror()
+
+Application.ScreenUpdating = False
+
+Dim answer As Integer
+answer = MsgBox("Generate Check # Column on ALL Sheet?", vbYesNo + vbQuestion, "All Clear: Column Generation")
+
+    If answer = vbYes Then
+        Call CheckLookUp
+        
+    Else
+    ' Do Nothing
+    
+    End If
+    
+Application.ScreenUpdating = True
+End Sub
+
+' -----------------------------------------------------------------------------------------------------------------------
+
 Sub VariantAllClearForward()
 
 ' This code was created to cleanse a database of invoices, removing cleared invoices based on another sheet.

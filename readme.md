@@ -1,6 +1,5 @@
 ![](step.jpg)
 
-# 一日一歩 Automation 
-### "One Day, One Step."
+# VBA Automation 
 
-Code repository for various automation process blocks in different languages.
+Code repository for various automation process blocks in VBA.

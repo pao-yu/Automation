@@ -1,6 +1,6 @@
 # All Clear
 Microsoft Excel (VBA Macro)
-<img src="./images/work/vba-allclear-laptop.png" style='width: 100%; margin: auto;'>
+<img src="./assets/figure.png" style='width: 100%; margin: auto;'>
 ### Background
 
 Current invoice clearing procedures across the company, was a time-intensive, manual procedure. The process, which required at least 50+ man hours per month (across a team of 3-5 people) on matching and clearing invoices, was suggested to be automated by any means possible.
